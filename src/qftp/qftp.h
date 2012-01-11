@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright (C) 2012 Nokia Corporation and/or its subsidiary(-ies).
 ** All rights reserved.
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
@@ -48,15 +48,9 @@
 
 QT_BEGIN_HEADER
 
-QT_BEGIN_NAMESPACE
-
-QT_MODULE(Network)
-
-#ifndef QT_NO_FTP
-
 class QFtpPrivate;
 
-class Q_NETWORK_EXPORT QFtp : public QObject
+class QFtp : public QObject
 {
     Q_OBJECT
 
@@ -162,18 +156,14 @@ public:
 
 private:
     Q_DISABLE_COPY(QFtp)
-    Q_DECLARE_PRIVATE(QFtp)
+    QScopedPointer<QFtpPrivate> d;
 
-    Q_PRIVATE_SLOT(d_func(), void _q_startNextCommand())
-    Q_PRIVATE_SLOT(d_func(), void _q_piFinished(const QString&))
-    Q_PRIVATE_SLOT(d_func(), void _q_piError(int, const QString&))
-    Q_PRIVATE_SLOT(d_func(), void _q_piConnectState(int))
-    Q_PRIVATE_SLOT(d_func(), void _q_piFtpReply(int, const QString&))
+    Q_PRIVATE_SLOT(d, void _q_startNextCommand())
+    Q_PRIVATE_SLOT(d, void _q_piFinished(const QString&))
+    Q_PRIVATE_SLOT(d, void _q_piError(int, const QString&))
+    Q_PRIVATE_SLOT(d, void _q_piConnectState(int))
+    Q_PRIVATE_SLOT(d, void _q_piFtpReply(int, const QString&))
 };
-
-#endif // QT_NO_FTP
-
-QT_END_NAMESPACE
 
 QT_END_HEADER
 
