@@ -3,7 +3,9 @@ TARGET = tst_qftp
 SOURCES  += tst_qftp.cpp
 
 
-QT = core network network-private testlib
+QT = core network testlib
+LIBS += -lqftp
+INCLUDEPATH += "../../include"
 
 wince*: {
    addFiles.files = rfc3252.txt
