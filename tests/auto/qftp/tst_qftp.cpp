@@ -53,12 +53,12 @@
 #include <QNetworkConfiguration>
 #include <qnetworkconfigmanager.h>
 #include <QNetworkSession>
-#include <QtNetwork/private/qnetworksession_p.h>
 
-#include "../../../network-settings.h"
+#include "../network-settings.h"
 
 #ifndef QT_NO_BEARERMANAGEMENT
 Q_DECLARE_METATYPE(QNetworkConfiguration)
+Q_DECLARE_METATYPE(QSharedPointer<QNetworkSession>)
 #endif
 
 class tst_QFtp : public QObject
