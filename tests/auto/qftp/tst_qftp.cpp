@@ -45,7 +45,7 @@
 #include <qcoreapplication.h>
 #include <qfile.h>
 #include <qbuffer.h>
-#include "qftp.h"
+#include <QtFtp/qftp.h>
 #include <qmap.h>
 #include <time.h>
 #include <stdlib.h>
