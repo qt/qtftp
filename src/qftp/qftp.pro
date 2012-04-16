@@ -1,12 +1,16 @@
-TEMPLATE = lib
-CONFIG += staticlib
-CONFIG -= shared
+load(qt_module)
 
-QT += network
+TARGET = QtFtp
+CONFIG += static
+CONFIG -= shared
+QT = core network
+
+CONFIG += module
+MODULE_PRI = ../../modules/qt_ftp.pri
+MODULE = ftp
+
+load(qt_module_config)
 
 # Input
 HEADERS += qftp.h
 SOURCES += qftp.cpp
-
-# Output
-DESTDIR = "../../lib"
