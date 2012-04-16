@@ -120,6 +120,8 @@ translations/*.qm
 translations/*_untranslated.ts
 qrc_*.cpp
 
+src/qftp/qtftpversion.h
+
 # Test generated files
 QObject.log
 tst_*
