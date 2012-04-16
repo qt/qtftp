@@ -40,6 +40,7 @@
 
 #include <QtWidgets>
 #include <QtNetwork>
+#include <QtFtp>
 
 #include "ftpwindow.h"
 

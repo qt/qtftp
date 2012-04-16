@@ -1,10 +1,8 @@
-QT += widgets
-
 HEADERS       = ftpwindow.h
 SOURCES       = ftpwindow.cpp \
                 main.cpp
 RESOURCES    += ftp.qrc
-QT           += network
+QT           += network ftp widgets
 
 # install
 target.path = $$[QT_INSTALL_EXAMPLES]/qtbase/network/qftp
