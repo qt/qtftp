@@ -12,5 +12,5 @@ MODULE = ftp
 load(qt_module_config)
 
 # Input
-HEADERS += qftp.h
-SOURCES += qftp.cpp
+HEADERS += qftp.h qurlinfo.h
+SOURCES += qftp.cpp qurlinfo.cpp
