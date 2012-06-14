@@ -1,0 +1,8 @@
+Sanity-Review+1: Qt Sanity Bot <qt_sanity_bot@ovi.com>
+Code-Review+2: Shane Kearns <shane.kearns@accenture.com>
+Code-Review+1: Thiago Macieira <thiago.macieira@intel.com>
+Submitted-by: Shane Kearns <shane.kearns@accenture.com>
+Submitted-at: Thu, 14 Jun 2012 14:31:47 +0200
+Reviewed-on: https://codereview.qt-project.org/28756
+Project: qt/qtftp
+Branch: refs/heads/master
