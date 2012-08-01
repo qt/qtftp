@@ -15,3 +15,4 @@ wince*: {
 }
 
 CONFIG+=insignificant_test  # uses live qt-test-server, inherently unstable
+DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
