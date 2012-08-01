@@ -57,7 +57,6 @@
 #include "../network-settings.h"
 
 #ifndef QT_NO_BEARERMANAGEMENT
-Q_DECLARE_METATYPE(QNetworkConfiguration)
 Q_DECLARE_METATYPE(QSharedPointer<QNetworkSession>)
 #endif
 
