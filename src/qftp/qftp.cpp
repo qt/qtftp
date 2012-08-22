@@ -542,6 +542,24 @@ static void _q_parseUnixDir(const QStringList &tokens, const QString &userName, 
     }
     if (dateTime.isValid())
         info->setLastModified(dateTime);
+    else {
+       if (dateString.startsWith("Feb 29")) {
+           int recentLeapYear;
+           QString timeString = dateString.mid(7);
+
+           dateTime = QLocale::c().toDateTime(timeString, QLatin1String("hh:mm"));
+
+           recentLeapYear = QDate::currentDate().year();
+           while (!QDate::isLeapYear(recentLeapYear)) {
+               recentLeapYear--;
+           }
+
+           dateTime.setDate(QDate(recentLeapYear, 2, 29));
+
+           _q_fixupDateTime(&dateTime);
+           info->setLastModified(dateTime);
+       }
+    }
 
     // Resolve permissions
     int permissions = 0;
