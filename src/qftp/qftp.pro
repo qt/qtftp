@@ -1,15 +1,14 @@
-load(qt_module)
+load(qt_build_config)
 
 TARGET = QtFtp
 CONFIG += static
 CONFIG -= shared
 QT = core network
 
-CONFIG += module
 MODULE_PRI = ../../modules/qt_ftp.pri
 MODULE = ftp
 
-load(qt_module_config)
+load(qt_module)
 
 # Input
 HEADERS += qftp.h qurlinfo.h
