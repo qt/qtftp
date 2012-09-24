@@ -1,0 +1,9 @@
+Code-Review+1: Sergio Ahumada <sergio.ahumada@digia.com>
+Sanity-Review+1: Qt Sanity Bot <qt_sanity_bot@ovi.com>
+Code-Review+2: Lars Knoll <lars.knoll@digia.com>
+Code-Review+1: Janne Anttila <janne.anttila@digia.com>
+Submitted-by: Lars Knoll <lars.knoll@digia.com>
+Submitted-at: Mon, 24 Sep 2012 09:08:16 +0200
+Reviewed-on: https://codereview.qt-project.org/35225
+Project: qt/qtftp
+Branch: refs/heads/master
