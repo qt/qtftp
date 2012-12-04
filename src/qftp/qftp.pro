@@ -13,4 +13,3 @@ load(qt_module)
 # Input
 HEADERS += qftp.h qurlinfo.h
 SOURCES += qftp.cpp qurlinfo.cpp
-DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
