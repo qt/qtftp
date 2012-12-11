@@ -1,0 +1,8 @@
+Code-Review+2: Thiago Macieira <thiago.macieira@intel.com>
+Code-Review+1: Oswald Buddenhagen <oswald.buddenhagen@digia.com>
+Sanity-Review+1: Qt Sanity Bot <qt_sanity_bot@ovi.com>
+Submitted-by: Thiago Macieira <thiago.macieira@intel.com>
+Submitted-at: Tue, 11 Dec 2012 21:38:08 +0100
+Reviewed-on: https://codereview.qt-project.org/42314
+Project: qt/qtftp
+Branch: refs/heads/master
