@@ -631,7 +631,7 @@ bool QFtpDTP::parseDir(const QByteArray &buffer, const QString &userName, QUrlIn
     }
 
     // DOS style FTP servers
-    QRegExp dosPattern(QLatin1String("^(\\d\\d-\\d\\d-\\d\\d\\ \\ \\d\\d:\\d\\d[AP]M)\\s+"
+    QRegExp dosPattern(QLatin1String("^(\\d\\d-\\d\\d-\\d\\d\\d?\\d?\\ \\ \\d\\d:\\d\\d[AP]M)\\s+"
                                      "(<DIR>|\\d+)\\s+(\\S.*)$"));
     if (dosPattern.indexIn(bufferStr) == 0) {
         _q_parseDosDir(dosPattern.capturedTexts(), userName, info);
