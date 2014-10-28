@@ -46,6 +46,7 @@
 #include "qurlinfo.h"
 #include <QtCore/qobject.h>
 
+QT_BEGIN_NAMESPACE
 
 class QFtpPrivate;
 
@@ -155,5 +156,6 @@ private:
     Q_PRIVATE_SLOT(d, void _q_piFtpReply(int, const QString&))
 };
 
+QT_END_NAMESPACE
 
 #endif // QFTP_H
