@@ -43,8 +43,8 @@
 #define QFTP_H
 
 #include <QtCore/qstring.h>
-#include "qurlinfo.h"
 #include <QtCore/qobject.h>
+#include <QtFtp/qurlinfo.h>
 
 QT_BEGIN_NAMESPACE
 
