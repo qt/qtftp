@@ -118,6 +118,11 @@ private slots:
     void queueMoreCommandsInDoneSlot();
 
     void qtbug7359Crash();
+    
+    void setUTF8_data();
+    void setUTF8();
+    void internationalList();
+    void internationalList_data();
 
 protected slots:
     void stateChanged( int );
@@ -492,6 +497,7 @@ void tst_QFtp::list_data()
     flukeRoot << "qtest";
     QStringList flukeQtest;
     flukeQtest << "bigfile";
+    flukeQtest << "int";
     flukeQtest << "nonASCII";
     flukeQtest << "rfc3252";
     flukeQtest << "rfc3252.txt";
@@ -563,6 +569,7 @@ void tst_QFtp::cd_data()
     flukeRoot << "qtest";
     QStringList flukeQtest;
     flukeQtest << "bigfile";
+    flukeQtest << "int";
     flukeQtest << "nonASCII";
     flukeQtest << "rfc3252";
     flukeQtest << "rfc3252.txt";
@@ -1511,6 +1518,7 @@ void tst_QFtp::proxy_data()
 
     QStringList flukeQtest;
     flukeQtest << "bigfile";
+    flukeQtest << "int";
     flukeQtest << "nonASCII";
     flukeQtest << "rfc3252";
     flukeQtest << "rfc3252.txt";
@@ -1849,7 +1857,9 @@ void tst_QFtp::listInfo( const QUrlInfo &i )
     QVERIFY( cur_state == ftp->state() );
     CURRENTCOMMAND_TEST;
 
-    if ( QTest::currentTestFunction()==QLatin1String("list") || QTest::currentTestFunction()==QLatin1String("cd") || QTest::currentTestFunction()==QLatin1String("proxy") || inFileDirExistsFunction ) {
+    if ( QTest::currentTestFunction()==QLatin1String("list") || QTest::currentTestFunction()==QLatin1String("cd") ||
+          QTest::currentTestFunction()==QLatin1String("proxy") || QTest::currentTestFunction()==QLatin1String("internationalList") || 
+          inFileDirExistsFunction ) {
         ResMapIt it = resultMap.find( QFtp::List );
         QVERIFY( it != resultMap.end() );
         QVERIFY( ftp->currentId() == it.value().id );
@@ -2150,6 +2160,96 @@ void tst_QFtp::qtbug7359Crash()
     t.restart();
     while ((elapsed = t.elapsed()) < 2000)
         QCoreApplication::processEvents(QEventLoop::AllEvents, 2000 - elapsed);
+}
+
+void tst_QFtp::setUTF8_data()
+{
+    QTest::addColumn<QString>("host");
+    QTest::addColumn<uint>("port");
+    QTest::addColumn<QString>("user");
+    QTest::addColumn<QString>("password");
+    QTest::addColumn<bool>("after_login");
+
+    QTest::newRow( "setUTF8_afterConnect" ) << QtNetworkSettings::serverName() << (uint)21 << QString() << QString() << false;
+    QTest::newRow( "setUTF8_afterLogin1" ) << QtNetworkSettings::serverName() << (uint)21 << QString() << QString() << true;
+    QTest::newRow( "setUTF8_afterLogin2" ) << QtNetworkSettings::serverName() << (uint)21 << QString("ftptest") << QString("password") << true;
+}
+
+void tst_QFtp::setUTF8()
+{
+    QFETCH( QString, host );
+    QFETCH( uint, port );
+    QFETCH( QString, user );
+    QFETCH( QString, password );
+    QFETCH( bool, after_login );
+
+    ftp = newFtp();
+    addCommand( QFtp::ConnectToHost, ftp->connectToHost( host, port ) );
+    if (after_login) {
+        addCommand( QFtp::Login, ftp->login( user, password ) );
+    }
+    addCommand( QFtp::SetUTF8, ftp->setUTF8() );
+    addCommand( QFtp::Close, ftp->close() );
+
+    QTestEventLoop::instance().enterLoop( 30 );
+    delete ftp;
+    ftp = 0;
+    if ( QTestEventLoop::instance().timeout() )
+        QFAIL( "Network operation timed out" );
+
+    ResMapIt it = resultMap.find( QFtp::SetUTF8 );
+    QVERIFY( it != resultMap.end() );
+    QCOMPARE( it.value().success, 1 );
+}
+
+void tst_QFtp::internationalList_data()
+{
+    QTest::addColumn<QString>("host");
+    QTest::addColumn<uint>("port");
+    QTest::addColumn<QString>("user");
+    QTest::addColumn<QString>("password");
+    QTest::addColumn<QString>("dir");
+    QTest::addColumn<int>("success");
+    QTest::addColumn<QStringList>("entryNames"); // ### we should rather use a QList<QUrlInfo> here
+
+    QStringList flukeQtestInt;
+    flukeQtestInt << QString::fromUtf8("тестовыйФайл");
+    flukeQtestInt << QString::fromUtf8("קובץבדיקה");
+    flukeQtestInt << QString::fromUtf8("テストファイル");
+
+    QTest::newRow( "absPath01" ) << QtNetworkSettings::serverName() << (uint)21 << QString() << QString() << QString("/qtest/int") << 1 << flukeQtestInt;
+    QTest::newRow( "absPath02" ) << QtNetworkSettings::serverName() << (uint)21 << QString("ftptest") << QString("password") << QString("/var/ftp/qtest/int") << 1 << flukeQtestInt;
+}
+
+void tst_QFtp::internationalList()
+{
+    QFETCH( QString, host );
+    QFETCH( uint, port );
+    QFETCH( QString, user );
+    QFETCH( QString, password );
+    QFETCH( QString, dir );
+
+    ftp = newFtp();
+    addCommand( QFtp::ConnectToHost, ftp->connectToHost( host, port ) );
+    addCommand( QFtp::Login, ftp->login( user, password ) );
+    addCommand( QFtp::SetUTF8, ftp->setUTF8() );
+    addCommand( QFtp::List, ftp->list( dir ) );
+    addCommand( QFtp::Close, ftp->close() );
+
+    QTestEventLoop::instance().enterLoop( 30 );
+    delete ftp;
+    ftp = 0;
+    if ( QTestEventLoop::instance().timeout() )
+        QFAIL( "Network operation timed out" );
+
+    ResMapIt it = resultMap.find( QFtp::List );
+    QVERIFY( it != resultMap.end() );
+    QTEST( it.value().success, "success" );
+    QFETCH( QStringList, entryNames );
+    QCOMPARE( listInfo_i.count(), entryNames.count() );
+    for ( uint i=0; i < (uint) entryNames.count(); i++ ) {
+        QCOMPARE( listInfo_i[i].name(), entryNames[i] );
+    }
 }
 
 QTEST_MAIN(tst_QFtp)
