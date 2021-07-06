@@ -942,6 +942,7 @@ void QFtpPI::readyRead()
             }
         }
         QString endOfMultiLine;
+        endOfMultiLine.resize(4);
         endOfMultiLine[0] = '0' + replyCode[0];
         endOfMultiLine[1] = '0' + replyCode[1];
         endOfMultiLine[2] = '0' + replyCode[2];
